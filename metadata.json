@@ -1,0 +1,9 @@
+{
+  "name": "Gemini Pro Studio",
+  "description": "A comprehensive chat interface that emulates the ChatGPT design while harnessing the full multimodal power of the Google Gemini API, including a hub of intelligent specialist agents and image generation capabilities.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone",
+    "geolocation"
+  ]
+}

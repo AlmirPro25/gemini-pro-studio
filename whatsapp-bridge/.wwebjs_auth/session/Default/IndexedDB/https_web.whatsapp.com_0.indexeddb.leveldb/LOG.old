@@ -1,0 +1,25 @@
+2025/10/25-18:06:06.421 1574 Reusing MANIFEST C:\Users\hkli\Desktop\gemini-pro-studio (7)\whatsapp-bridge\.wwebjs_auth\session\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/MANIFEST-000001
+2025/10/25-18:06:06.422 1574 Recovering log #282
+2025/10/25-18:06:06.651 1574 Reusing old log C:\Users\hkli\Desktop\gemini-pro-studio (7)\whatsapp-bridge\.wwebjs_auth\session\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/000282.log 
+2025/10/25-18:06:10.859 8ac Level-0 table #293: started
+2025/10/25-18:06:10.909 8ac Level-0 table #293: 1231554 bytes OK
+2025/10/25-18:06:10.910 8ac Delete type=0 #282
+2025/10/25-18:06:10.911 8ac Manual compaction at level-0 from '\x00(\x00\x00\x00' @ 72057594037927935 : 1 .. '\x00)\x00\x00\x00' @ 0 : 0; will stop at (end)
+2025/10/25-18:06:14.928 8ac Compacting 1@1 + 7@2 files
+2025/10/25-18:06:15.232 8ac Generated table #294@1: 45837 keys, 2218544 bytes
+2025/10/25-18:06:15.364 8ac Generated table #295@1: 27020 keys, 2179739 bytes
+2025/10/25-18:06:15.416 8ac Generated table #296@1: 1597 keys, 2148990 bytes
+2025/10/25-18:06:15.565 8ac Generated table #297@1: 8799 keys, 2167636 bytes
+2025/10/25-18:06:15.731 8ac Generated table #298@1: 21143 keys, 2205626 bytes
+2025/10/25-18:06:15.974 8ac Generated table #299@1: 75363 keys, 2218029 bytes
+2025/10/25-18:06:15.985 8ac Generated table #300@1: 2182 keys, 106290 bytes
+2025/10/25-18:06:15.985 8ac Compacted 1@1 + 7@2 files => 13244854 bytes
+2025/10/25-18:06:15.987 8ac compacted to: files[ 0 0 7 0 0 0 0 ]
+2025/10/25-18:06:15.987 8ac Delete type=2 #284
+2025/10/25-18:06:15.987 8ac Delete type=2 #285
+2025/10/25-18:06:15.987 8ac Delete type=2 #286
+2025/10/25-18:06:15.987 8ac Delete type=2 #287
+2025/10/25-18:06:15.987 8ac Delete type=2 #288
+2025/10/25-18:06:15.987 8ac Delete type=2 #289
+2025/10/25-18:06:15.987 8ac Delete type=2 #290
+2025/10/25-18:06:15.987 8ac Delete type=2 #293

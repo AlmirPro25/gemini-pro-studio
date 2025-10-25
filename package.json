@@ -1,0 +1,36 @@
+{
+  "name": "gemini-pro-studio",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "validate": "node scripts/validate.cjs",
+    "electron": "cd electron && npm start",
+    "electron:dev": "cd electron && npm run dev",
+    "electron:build": "node scripts/build-electron.js",
+    "electron:build:win": "node scripts/build-electron.js --win",
+    "electron:build:mac": "node scripts/build-electron.js --mac",
+    "electron:build:linux": "node scripts/build-electron.js --linux",
+    "package": "npm run build && npm run electron:build"
+  },
+  "dependencies": {
+    "@google/genai": "0.14.0",
+    "@types/better-sqlite3": "^7.6.13",
+    "better-sqlite3": "^12.4.1",
+    "marked": "13.0.2",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "socket.io-client": "^4.8.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.14.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "@vitejs/plugin-react": "^5.0.0",
+    "typescript": "~5.8.2",
+    "vite": "^6.2.0"
+  }
+}

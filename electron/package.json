@@ -1,0 +1,115 @@
+{
+  "name": "gemini-pro-studio",
+  "productName": "Gemini Pro Studio",
+  "version": "1.0.0",
+  "description": "Sistema completo de IA com Gemini API - Desktop App",
+  "main": "main.js",
+  "author": {
+    "name": "Seu Nome",
+    "email": "seu@email.com"
+  },
+  "license": "MIT",
+  "scripts": {
+    "start": "electron .",
+    "dev": "cross-env NODE_ENV=development electron .",
+    "build": "electron-builder",
+    "build:win": "electron-builder --win",
+    "build:mac": "electron-builder --mac",
+    "build:linux": "electron-builder --linux",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder"
+  },
+  "dependencies": {
+    "electron-updater": "^6.1.7"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.3",
+    "electron": "^28.1.0",
+    "electron-builder": "^24.9.1"
+  },
+  "build": {
+    "appId": "com.geminiprostudio.app",
+    "productName": "Gemini Pro Studio",
+    "copyright": "Copyright © 2025",
+    "directories": {
+      "output": "dist-electron",
+      "buildResources": "build"
+    },
+    "files": [
+      "main.js",
+      "preload.js",
+      "icon.png",
+      "tray-icon.png",
+      "../dist/**/*",
+      "../whatsapp-bridge/**/*",
+      "!../whatsapp-bridge/node_modules/**/*",
+      "!../whatsapp-bridge/.wwebjs_*/**/*"
+    ],
+    "extraResources": [
+      {
+        "from": "../whatsapp-bridge",
+        "to": "whatsapp-bridge",
+        "filter": ["**/*", "!node_modules", "!.wwebjs_*"]
+      }
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": ["x64", "ia32"]
+        },
+        {
+          "target": "portable",
+          "arch": ["x64"]
+        }
+      ],
+      "icon": "icon.ico",
+      "artifactName": "${productName}-Setup-${version}.${ext}"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "Gemini Pro Studio",
+      "perMachine": false,
+      "runAfterFinish": true
+    },
+    "portable": {
+      "artifactName": "${productName}-Portable-${version}.${ext}"
+    },
+    "mac": {
+      "target": ["dmg", "zip"],
+      "category": "public.app-category.productivity",
+      "icon": "icon.icns",
+      "hardenedRuntime": true,
+      "gatekeeperAssess": false,
+      "entitlements": "entitlements.mac.plist",
+      "entitlementsInherit": "entitlements.mac.plist"
+    },
+    "dmg": {
+      "contents": [
+        {
+          "x": 130,
+          "y": 220
+        },
+        {
+          "x": 410,
+          "y": 220,
+          "type": "link",
+          "path": "/Applications"
+        }
+      ]
+    },
+    "linux": {
+      "target": ["AppImage", "deb", "rpm"],
+      "category": "Utility",
+      "icon": "icon.png"
+    },
+    "publish": {
+      "provider": "github",
+      "owner": "seu-usuario",
+      "repo": "gemini-pro-studio"
+    }
+  }
+}
