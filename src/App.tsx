@@ -19,8 +19,6 @@ import { DocumentGeneratorView } from './components/DocumentGeneratorView';
 import { WhatsAppBusinessPanel } from './components/WhatsAppBusinessPanel';
 import { WhatsAppAdminPanel } from './components/WhatsAppAdminPanel';
 import { SecurityView } from './components/SecurityView';
-import { AutonomousAgentView } from './components/AutonomousAgentView';
-import { DeepVisionAutomationPanel } from './components/DeepVisionAutomationPanel';
 import { DesktopAutomationView } from './components/DesktopAutomationView';
 import { Message, GeminiModel, Persona, Chat, Attachment, Project, LibraryItem, GenerationConfig, LibraryItemType } from './types';
 import { GEMINI_MODELS, PERSONAS, DEFAULT_GENERATION_CONFIG } from './constants';
@@ -30,7 +28,7 @@ import { safeLocalStorage } from './utils/storage';
 import { dbService } from './services/databaseService';
 import { backupService } from './services/backupService';
 
-type ActiveView = 'chat' | 'library' | 'projects' | 'gallery' | 'documents' | 'whatsapp' | 'admin' | 'security' | 'agent' | 'automation' | 'desktop';
+type ActiveView = 'chat' | 'library' | 'projects' | 'gallery' | 'documents' | 'whatsapp' | 'admin' | 'security' | 'desktop';
 type Theme = 'light' | 'dark';
 type InteractiveTab = 'preview' | 'code';
 
@@ -945,10 +943,6 @@ const App: React.FC = () => {
         return <WhatsAppAdminPanel />;
       case 'security':
         return <SecurityView />;
-      case 'agent':
-        return <AutonomousAgentView />;
-      case 'automation':
-        return <DeepVisionAutomationPanel />;
       case 'desktop':
         return <DesktopAutomationView />;
       case 'chat':
@@ -1013,8 +1007,6 @@ const App: React.FC = () => {
         onSelectWhatsApp={() => setActiveView('whatsapp')}
         onSelectAdmin={() => setActiveView('admin')}
         onSelectSecurity={() => setActiveView('security')}
-        onSelectAgent={() => setActiveView('agent')}
-        onSelectAutomation={() => setActiveView('automation')}
         onSelectDesktop={() => setActiveView('desktop')}
         // Project props
         activeProjectId={activeProjectId}

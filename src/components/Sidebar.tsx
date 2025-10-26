@@ -17,8 +17,6 @@ interface SidebarProps {
   onSelectWhatsApp: () => void;
   onSelectAdmin: () => void;
   onSelectSecurity?: () => void;
-  onSelectAgent?: () => void;
-  onSelectAutomation?: () => void;
   onSelectDesktop?: () => void;
   // New props for project context
   activeProjectId: string | null;
@@ -271,24 +269,6 @@ const GlobalView: React.FC<Omit<SidebarProps, 'activeProjectId' | 'onExitProject
                 onClick={props.onSelectSecurity}
                 gradient="bg-gradient-to-br from-red-500 to-rose-600"
                 IconComponent={SecurityIcon}
-              />
-            )}
-            {props.onSelectAgent && (
-              <SidebarLink 
-                icon="fa-robot" 
-                text="AI Agent" 
-                onClick={props.onSelectAgent}
-                gradient="bg-gradient-to-br from-violet-500 to-fuchsia-600"
-                IconComponent={AgentIcon}
-              />
-            )}
-            {props.onSelectAutomation && (
-              <SidebarLink 
-                icon="fa-wand-magic-sparkles" 
-                text="Automation" 
-                onClick={props.onSelectAutomation}
-                gradient="bg-gradient-to-br from-sky-500 to-blue-600"
-                IconComponent={AutomationIcon}
               />
             )}
             {props.onSelectDesktop && (

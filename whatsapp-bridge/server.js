@@ -1,8 +1,8 @@
 /**
- * 🔗 WHATSAPP BRIDGE SERVER
+ * 🔗 prox ai studio - WHATSAPP BRIDGE SERVER
  * 
- * Ponte entre WhatsApp Web.js e Gemini Pro Studio
- * Permite usar todas as funcionalidades do app via WhatsApp
+ * Bridge between WhatsApp Web.js and prox ai studio
+ * Allows using all platform features via WhatsApp Business
  */
 
 require("dotenv").config();
@@ -666,72 +666,46 @@ app.post("/api/send-audio", async (req, res) => {
     return res.status(503).json({ error: "WhatsApp não está pronto" });
   }
 
-  let tempFilePath = null;
-
   try {
     console.log(`🎤 Enviando áudio para ${to}...`);
     
     // Formata número se necessário
     const chatId = to.includes("@c.us") ? to : `${to}@c.us`;
 
-    // Salva áudio temporariamente (evita erro de base64 muito grande)
-    const tempDir = os.tmpdir();
-    tempFilePath = path.join(tempDir, `audio_${Date.now()}.ogg`);
-    
     // Remove prefixo data:audio/ogg se existir
     const base64Data = audioBase64.replace(/^data:audio\/\w+;base64,/, '');
     
-    // Salva arquivo
-    fs.writeFileSync(tempFilePath, base64Data, 'base64');
-    console.log(`💾 Áudio salvo temporariamente: ${tempFilePath}`);
+    console.log(`📦 Tamanho do áudio: ${(base64Data.length / 1024).toFixed(2)} KB (base64)`);
 
-    // Cria MessageMedia do arquivo
-    const media = MessageMedia.fromFilePath(tempFilePath);
+    // Cria MessageMedia sem sendAudioAsVoice (envia como arquivo de áudio normal)
+    const media = new MessageMedia('audio/ogg', base64Data, 'audio.ogg');
     
-    // Envia como PTT (áudio de voz)
-    const sentMessage = await whatsappClient.sendMessage(chatId, media, {
-      sendAudioAsVoice: true
-    });
+    // Envia como arquivo de áudio normal (não PTT)
+    const sentMessage = await whatsappClient.sendMessage(chatId, media);
 
     console.log(`✅ Áudio enviado com sucesso!`);
 
-    // Salvar mensagem no banco
+    // Salvar no banco
     try {
       await db.saveMessage({
         messageId: sentMessage.id._serialized,
         sessionId: 'default',
         from: whatsappClient.info?.wid?.user || 'me',
         to: to,
-        type: 'ptt',
+        type: 'audio',
         content: '[Áudio]',
-        mediaMimetype: 'audio/ogg; codecs=opus',
+        mediaMimetype: 'audio/ogg',
         timestamp: new Date().toISOString(),
         status: 'sent',
         isFromMe: true
       });
     } catch (dbError) {
-      console.error('Erro ao salvar mensagem no banco:', dbError);
-    }
-
-    // Remove arquivo temporário
-    if (tempFilePath && fs.existsSync(tempFilePath)) {
-      fs.unlinkSync(tempFilePath);
-      console.log(`🗑️ Arquivo temporário removido`);
+      console.error('Erro ao salvar no banco:', dbError);
     }
 
     res.json({ success: true, message: "Áudio enviado" });
   } catch (error) {
     console.error("❌ Erro ao enviar áudio:", error);
-    
-    // Remove arquivo temporário em caso de erro
-    if (tempFilePath && fs.existsSync(tempFilePath)) {
-      try {
-        fs.unlinkSync(tempFilePath);
-      } catch (unlinkError) {
-        console.error('Erro ao remover arquivo temporário:', unlinkError);
-      }
-    }
-    
     res.status(500).json({ error: error.message });
   }
 });

@@ -1,3 +1,6 @@
-2025/10/25-18:48:12.089 2c08 Reusing MANIFEST C:\Users\hkli\Desktop\gemini-pro-studio (7)\whatsapp-bridge\.wwebjs_auth\session\Default\Local Storage\leveldb/MANIFEST-000001
-2025/10/25-18:48:12.090 2c08 Recovering log #16
-2025/10/25-18:48:12.090 2c08 Reusing old log C:\Users\hkli\Desktop\gemini-pro-studio (7)\whatsapp-bridge\.wwebjs_auth\session\Default\Local Storage\leveldb/000016.log 
+2025/10/26-02:32:10.674 2860 Reusing MANIFEST C:\Users\hkli\Desktop\gemini-pro-studio (7)\whatsapp-bridge\.wwebjs_auth\session\Default\Local Storage\leveldb/MANIFEST-000001
+2025/10/26-02:32:10.702 2860 Recovering log #23
+2025/10/26-02:32:10.703 2860 Reusing old log C:\Users\hkli\Desktop\gemini-pro-studio (7)\whatsapp-bridge\.wwebjs_auth\session\Default\Local Storage\leveldb/000023.log 
+2025/10/26-02:52:22.279 854 Level-0 table #27: started
+2025/10/26-02:52:22.289 854 Level-0 table #27: 14337 bytes OK
+2025/10/26-02:52:22.290 854 Delete type=0 #23

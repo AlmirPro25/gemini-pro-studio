@@ -1,6 +1,6 @@
-# 📱 WhatsApp Bridge - Integração com Gemini Pro Studio
+# 📱 WhatsApp Bridge - Integration with prox ai studio
 
-Ponte entre WhatsApp Web.js e Gemini Pro Studio, permitindo usar todas as funcionalidades do app via WhatsApp.
+Bridge between WhatsApp Web.js and prox ai studio, allowing you to use all app features via WhatsApp.
 
 ## 🚀 Funcionalidades
 
@@ -47,11 +47,11 @@ npm start
 - Escaneie com seu WhatsApp
 - Aguarde a mensagem "WhatsApp Client pronto!"
 
-### 3. Acessar Painel Web
+### 3. Access Web Panel
 
-- Abra o Gemini Pro Studio
-- Clique em "📱 WhatsApp" na sidebar
-- Gerencie suas conversas pelo painel
+- Open prox ai studio
+- Click "📱 WhatsApp" in sidebar
+- Manage your conversations through the panel
 
 ## 💬 Comandos Disponíveis
 
@@ -115,7 +115,7 @@ WhatsApp-Web.js
      ↓
 Bridge Server (Express + Socket.IO)
      ↓
-Gemini Pro Studio (React)
+prox ai studio (React)
      ↓
 Gemini API
 ```
@@ -196,4 +196,4 @@ MIT
 
 ---
 
-**Desenvolvido com ❤️ para integrar WhatsApp com Gemini Pro Studio**
+**Developed with ❤️ to integrate WhatsApp with prox ai studio**

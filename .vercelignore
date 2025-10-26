@@ -1,0 +1,7 @@
+whatsapp-bridge/
+electron/
+docs/
+*.md
+.env.local
+.env
+node_modules/

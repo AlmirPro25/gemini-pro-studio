@@ -1,8 +1,8 @@
 {
-  "name": "gemini-pro-studio",
-  "productName": "Gemini Pro Studio",
+  "name": "prox-ai-studio",
+  "productName": "prox ai studio",
   "version": "1.0.0",
-  "description": "Sistema completo de IA com Gemini API - Desktop App",
+  "description": "Complete AI system with Gemini API - Desktop App",
   "main": "main.js",
   "author": {
     "name": "Seu Nome",
@@ -28,8 +28,8 @@
     "electron-builder": "^24.9.1"
   },
   "build": {
-    "appId": "com.geminiprostudio.app",
-    "productName": "Gemini Pro Studio",
+    "appId": "com.proxaistudio.app",
+    "productName": "prox ai studio",
     "copyright": "Copyright © 2025",
     "directories": {
       "output": "dist-electron",
@@ -71,7 +71,7 @@
       "allowToChangeInstallationDirectory": true,
       "createDesktopShortcut": true,
       "createStartMenuShortcut": true,
-      "shortcutName": "Gemini Pro Studio",
+      "shortcutName": "prox ai studio",
       "perMachine": false,
       "runAfterFinish": true
     },

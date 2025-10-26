@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: whatsapp-bridge
+    env: node
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: WHATSAPP_BRIDGE_PORT
+        value: 3001
+      - key: STUDIO_URL
+        sync: false
