@@ -64,11 +64,52 @@ export const Header: React.FC<HeaderProps> = (props) => {
       <div className="relative">
         <button 
           onClick={() => setIsModelSelectorOpen(!isModelSelectorOpen)}
-          className="flex items-center gap-2 px-3 py-1.5 bg-transparent text-text-secondary hover:text-text-primary rounded-lg transition-colors text-base"
+          className="flex items-center gap-3 px-3 py-1.5 bg-transparent text-text-secondary hover:text-text-primary rounded-lg transition-all duration-200 text-base group"
         >
-          <span className="font-semibold text-lg text-text-primary">Estúdio Gemini Pro</span>
+          <div className="flex items-center gap-2.5">
+            <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-indigo-600 via-purple-600 to-cyan-500 flex items-center justify-center shadow-xl shadow-indigo-500/30 group-hover:shadow-indigo-500/50 group-hover:scale-105 transition-all duration-300 relative overflow-hidden">
+              <svg 
+                width="22" 
+                height="22" 
+                viewBox="0 0 24 24" 
+                fill="none" 
+                xmlns="http://www.w3.org/2000/svg"
+                className="relative z-10 drop-shadow-lg"
+              >
+                {/* Estrela principal - maior e mais brilhante */}
+                <path 
+                  d="M12 1L14 9L22 11L14 13L12 21L10 13L2 11L10 9L12 1Z" 
+                  fill="white"
+                  stroke="white"
+                  strokeWidth="0.5"
+                  className="animate-pulse"
+                  style={{ filter: 'drop-shadow(0 0 4px rgba(255,255,255,0.8))' }}
+                />
+                {/* Estrela pequena superior direita */}
+                <path 
+                  d="M19 4L19.8 6.8L22.5 7.5L19.8 8.2L19 11L18.2 8.2L15.5 7.5L18.2 6.8L19 4Z" 
+                  fill="white"
+                  stroke="white"
+                  strokeWidth="0.3"
+                  opacity="0.9"
+                />
+                {/* Estrela pequena inferior esquerda */}
+                <path 
+                  d="M5 16L5.8 18.8L8.5 19.5L5.8 20.2L5 23L4.2 20.2L1.5 19.5L4.2 18.8L5 16Z" 
+                  fill="white"
+                  stroke="white"
+                  strokeWidth="0.3"
+                  opacity="0.7"
+                />
+              </svg>
+              <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 animate-pulse"></div>
+            </div>
+            <span className="font-bold text-2xl text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-purple-400 to-cyan-400 drop-shadow-sm" style={{ fontFamily: "'Space Grotesk', 'Inter', sans-serif", letterSpacing: '-0.02em' }}>
+              Prox AI Studio
+            </span>
+          </div>
           <span className="text-text-tertiary">/</span>
-          <span>{currentSelectionName}</span>
+          <span className="text-text-secondary group-hover:text-text-primary transition-colors">{currentSelectionName}</span>
           <i className={`fa-solid fa-chevron-down text-xs transition-transform duration-200 ${isModelSelectorOpen ? 'rotate-180' : ''}`}></i>
         </button>
         {isModelSelectorOpen && (

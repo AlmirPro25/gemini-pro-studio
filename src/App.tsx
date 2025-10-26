@@ -18,6 +18,10 @@ import { ImageViewerModal } from './components/ImageViewerModal';
 import { DocumentGeneratorView } from './components/DocumentGeneratorView';
 import { WhatsAppBusinessPanel } from './components/WhatsAppBusinessPanel';
 import { WhatsAppAdminPanel } from './components/WhatsAppAdminPanel';
+import { SecurityView } from './components/SecurityView';
+import { AutonomousAgentView } from './components/AutonomousAgentView';
+import { DeepVisionAutomationPanel } from './components/DeepVisionAutomationPanel';
+import { DesktopAutomationView } from './components/DesktopAutomationView';
 import { Message, GeminiModel, Persona, Chat, Attachment, Project, LibraryItem, GenerationConfig, LibraryItemType } from './types';
 import { GEMINI_MODELS, PERSONAS, DEFAULT_GENERATION_CONFIG } from './constants';
 import { sendMessageToGemini, sendMessageWithGrounding, generateOrEditImage, generateImageWithImagen, generateVideoWithVeo, transcribeAudio, generateSpeech, LiveSessionManager } from './services/geminiService';
@@ -26,7 +30,7 @@ import { safeLocalStorage } from './utils/storage';
 import { dbService } from './services/databaseService';
 import { backupService } from './services/backupService';
 
-type ActiveView = 'chat' | 'library' | 'projects' | 'gallery' | 'documents' | 'whatsapp' | 'admin';
+type ActiveView = 'chat' | 'library' | 'projects' | 'gallery' | 'documents' | 'whatsapp' | 'admin' | 'security' | 'agent' | 'automation' | 'desktop';
 type Theme = 'light' | 'dark';
 type InteractiveTab = 'preview' | 'code';
 
@@ -84,7 +88,7 @@ const App: React.FC = () => {
   const interactivePanelRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const savedTheme = localStorage.getItem('gemini-pro-studio-theme') as Theme | null;
+    const savedTheme = localStorage.getItem('proxaistudio-theme') as Theme | null;
     if (savedTheme) {
       setTheme(savedTheme);
       (window as any).applyTheme(savedTheme);
@@ -114,7 +118,7 @@ const App: React.FC = () => {
         setChatHistory(dbChats as any);
       } else {
         // Fallback para localStorage se IndexedDB estiver vazio
-        const localChats = safeLocalStorage.getItem('geminiChatHistory', []);
+        const localChats = safeLocalStorage.getItem('proxChatHistory', []);
         if (localChats.length > 0) {
           setChatHistory(localChats);
           // Migrar para IndexedDB
@@ -125,7 +129,7 @@ const App: React.FC = () => {
       if (dbProjects.length > 0) {
         setProjects(dbProjects as any);
       } else {
-        const localProjects = safeLocalStorage.getItem('geminiProjects', []);
+        const localProjects = safeLocalStorage.getItem('proxProjects', []);
         if (localProjects.length > 0) {
           setProjects(localProjects);
           localProjects.forEach(project => dbService.saveProject(project));
@@ -135,7 +139,7 @@ const App: React.FC = () => {
       if (dbLibrary.length > 0) {
         setLibraryItems(dbLibrary as any);
       } else {
-        const localLibrary = safeLocalStorage.getItem('geminiLibrary', []);
+        const localLibrary = safeLocalStorage.getItem('proxLibrary', []);
         if (localLibrary.length > 0) {
           setLibraryItems(localLibrary);
           localLibrary.forEach(item => dbService.saveLibraryItem(item));
@@ -150,9 +154,9 @@ const App: React.FC = () => {
     } catch (error) {
       console.error('Erro ao carregar dados do IndexedDB:', error);
       // Fallback para localStorage
-      setChatHistory(safeLocalStorage.getItem('geminiChatHistory', []));
-      setProjects(safeLocalStorage.getItem('geminiProjects', []));
-      setLibraryItems(safeLocalStorage.getItem('geminiLibrary', []));
+      setChatHistory(safeLocalStorage.getItem('proxChatHistory', []));
+      setProjects(safeLocalStorage.getItem('proxProjects', []));
+      setLibraryItems(safeLocalStorage.getItem('proxLibrary', []));
     }
   };
 
@@ -161,9 +165,9 @@ const App: React.FC = () => {
     saveDataToDB();
     
     // Manter localStorage como backup
-    safeLocalStorage.setItem('geminiChatHistory', chatHistory);
-    safeLocalStorage.setItem('geminiProjects', projects);
-    safeLocalStorage.setItem('geminiLibrary', libraryItems);
+    safeLocalStorage.setItem('proxChatHistory', chatHistory);
+    safeLocalStorage.setItem('proxProjects', projects);
+    safeLocalStorage.setItem('proxLibrary', libraryItems);
   }, [chatHistory, projects, libraryItems]);
 
   const saveDataToDB = async () => {
@@ -206,7 +210,7 @@ const App: React.FC = () => {
   const handleToggleTheme = () => {
     const newTheme = theme === 'dark' ? 'light' : 'dark';
     setTheme(newTheme);
-    localStorage.setItem('gemini-pro-studio-theme', newTheme);
+    localStorage.setItem('proxaistudio-theme', newTheme);
     (window as any).applyTheme(newTheme);
   };
 
@@ -939,6 +943,14 @@ const App: React.FC = () => {
         return <WhatsAppBusinessPanel />;
       case 'admin':
         return <WhatsAppAdminPanel />;
+      case 'security':
+        return <SecurityView />;
+      case 'agent':
+        return <AutonomousAgentView />;
+      case 'automation':
+        return <DeepVisionAutomationPanel />;
+      case 'desktop':
+        return <DesktopAutomationView />;
       case 'chat':
       default:
         return (
@@ -1000,6 +1012,10 @@ const App: React.FC = () => {
         onSelectDocuments={() => setActiveView('documents')}
         onSelectWhatsApp={() => setActiveView('whatsapp')}
         onSelectAdmin={() => setActiveView('admin')}
+        onSelectSecurity={() => setActiveView('security')}
+        onSelectAgent={() => setActiveView('agent')}
+        onSelectAutomation={() => setActiveView('automation')}
+        onSelectDesktop={() => setActiveView('desktop')}
         // Project props
         activeProjectId={activeProjectId}
         onExitProject={handleExitProject}

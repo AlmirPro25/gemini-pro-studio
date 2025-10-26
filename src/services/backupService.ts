@@ -8,7 +8,7 @@ import { dbService } from './databaseService';
 
 class BackupService {
   private backupInterval: number | null = null;
-  private readonly BACKUP_KEY = 'gemini-pro-studio-last-backup';
+  private readonly BACKUP_KEY = 'proxaistudio-last-backup';
   private readonly BACKUP_INTERVAL = 24 * 60 * 60 * 1000; // 24 horas
 
   /**

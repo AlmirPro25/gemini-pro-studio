@@ -1,6 +1,8 @@
-# 🚀 Gemini Pro Studio + WhatsApp Integration
+# 🚀 prox ai studio
 
-Sistema completo de IA com interface web e integração WhatsApp, usando Gemini API.
+**Professional AI Platform with WhatsApp Integration**
+
+Complete artificial intelligence system with modern web interface, WhatsApp Business integration and multiple advanced capabilities.
 
 ## ✨ Funcionalidades
 
@@ -43,13 +45,15 @@ cp .env.example .env.local
 # Edite .env.local e adicione sua GEMINI_API_KEY
 ```
 
-### 3. Iniciar Studio
+### 3. Start prox ai studio
 
 ```bash
 npm run dev
 ```
 
-Acesse: http://localhost:3000
+Access: http://localhost:3000
+
+🎉 **Welcome to prox ai studio!**
 
 ### 4. Iniciar WhatsApp Bridge (Opcional)
 
@@ -91,15 +95,15 @@ Escaneie o QR Code com seu WhatsApp!
 - "analise este código: [código]"
 - [Enviar foto] "o que tem nesta imagem?"
 
-## 🏗️ Arquitetura
+## 🏗️ Architecture
 
 ```
 ┌─────────────────────────────────────┐
-│     Gemini Pro Studio (React)       │
-│  - Interface Web                    │
-│  - Chat com IA                      │
-│  - Geração de Documentos            │
-│  - Galeria de Imagens               │
+│      prox ai studio (React)         │
+│  - Professional Web Interface       │
+│  - Advanced AI Chat                 │
+│  - Document Generation              │
+│  - Image Gallery                    │
 └──────────────┬──────────────────────┘
                │
                ▼
@@ -142,7 +146,7 @@ Escaneie o QR Code com seu WhatsApp!
 ## 📊 Estrutura do Projeto
 
 ```
-gemini-pro-studio/
+prox-ai-studio/
 ├── src/                    # Código fonte React
 │   ├── components/         # Componentes React
 │   ├── services/          # Serviços e APIs
@@ -210,6 +214,19 @@ Desenvolvido com ❤️ usando:
 
 ---
 
-**⭐ Se este projeto te ajudou, deixe uma estrela!**
+## 🎨 Brand
 
-**📱 Teste agora: `npm run dev` e `cd whatsapp-bridge && npm start`**
+**prox ai studio** - Professional AI, Simplified
+
+### Meaning
+- **prox** = proximity, professional, productive
+- **ai** = artificial intelligence
+- **studio** = creative and professional environment
+
+---
+
+**⭐ If this project helped you, leave a star!**
+
+**📱 Try now: `npm run dev` and `cd whatsapp-bridge && npm start`**
+
+**🚀 prox ai studio - Transform Ideas into Reality with AI**

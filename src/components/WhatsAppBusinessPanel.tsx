@@ -435,13 +435,15 @@ export const WhatsAppBusinessPanel: React.FC = () => {
 
         const audioBlob = new Blob(audioChunksRef.current, { type: 'audio/ogg; codecs=opus' });
         
+        console.log(`📦 Áudio gravado: ${(audioBlob.size / 1024).toFixed(2)} KB`);
+        
         // Envia o áudio usando endpoint específico
         const reader = new FileReader();
         reader.onload = async () => {
-          const base64 = (reader.result as string).split(',')[1];
-          
           try {
-            console.log('📤 Enviando áudio...');
+            const base64 = (reader.result as string).split(',')[1];
+            
+            console.log(`📤 Enviando áudio (${(base64.length / 1024).toFixed(2)} KB base64)...`);
             
             const response = await fetch(`${BRIDGE_URL}/api/send-audio`, {
               method: 'POST',
@@ -473,11 +475,11 @@ export const WhatsAppBusinessPanel: React.FC = () => {
             } else {
               const error = await response.json();
               console.error('❌ Erro ao enviar áudio:', error);
-              alert('Erro ao enviar áudio. Tente novamente.');
+              alert('⚠️ Envio de áudio temporariamente indisponível\n\nDevido a limitações do WhatsApp Web.js, o envio de áudios não está funcionando no momento.\n\nVocê pode:\n• Enviar mensagens de texto\n• Enviar imagens/vídeos\n• Receber áudios normalmente\n\nEstamos trabalhando em uma solução!');
             }
           } catch (error) {
             console.error('❌ Erro ao enviar áudio:', error);
-            alert('Erro ao enviar áudio. Verifique sua conexão.');
+            alert('⚠️ Envio de áudio temporariamente indisponível\n\nDevido a limitações do WhatsApp Web.js, o envio de áudios não está funcionando no momento.\n\nVocê pode:\n• Enviar mensagens de texto\n• Enviar imagens/vídeos\n• Receber áudios normalmente');
           }
         };
         reader.readAsDataURL(audioBlob);

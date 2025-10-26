@@ -16,16 +16,116 @@ interface SidebarProps {
   onSelectDocuments: () => void;
   onSelectWhatsApp: () => void;
   onSelectAdmin: () => void;
+  onSelectSecurity?: () => void;
+  onSelectAgent?: () => void;
+  onSelectAutomation?: () => void;
+  onSelectDesktop?: () => void;
   // New props for project context
   activeProjectId: string | null;
   onExitProject: () => void;
   projectFiles: ProjectFile[];
 }
 
-const SidebarLink: React.FC<{ icon: string; text: string; onClick?: () => void, isActive?: boolean }> = ({ icon, text, onClick, isActive }) => (
-  <button onClick={onClick} className={`flex items-center gap-3 p-3 rounded-lg hover:bg-[color:var(--bg-tertiary)] transition-colors duration-200 w-full text-left text-sm text-text-primary ${isActive ? 'bg-[color:var(--bg-tertiary)]' : ''}`}>
-    <i className={`fa-solid ${icon} w-5 text-center text-text-secondary`}></i>
-    <span>{text}</span>
+// SVG Icons Components
+const DocumentIcon = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M14 2H6C5.46957 2 4.96086 2.21071 4.58579 2.58579C4.21071 2.96086 4 3.46957 4 4V20C4 20.5304 4.21071 21.0391 4.58579 21.4142C4.96086 21.7893 5.46957 22 6 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 20.5304 20 20V8L14 2Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d="M14 2V8H20" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d="M16 13H8" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d="M16 17H8" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d="M10 9H8" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+  </svg>
+);
+
+const GalleryIcon = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor" strokeWidth="2"/>
+    <circle cx="8.5" cy="8.5" r="1.5" fill="currentColor"/>
+    <path d="M21 15L16 10L5 21" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+  </svg>
+);
+
+const LibraryIcon = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M4 19.5C4 18.837 4.26339 18.2011 4.73223 17.7322C5.20107 17.2634 5.83696 17 6.5 17H20" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d="M6.5 2H20V22H6.5C5.83696 22 5.20107 21.7366 4.73223 21.2678C4.26339 20.7989 4 20.163 4 19.5V4.5C4 3.83696 4.26339 3.20107 4.73223 2.73223C5.20107 2.26339 5.83696 2 6.5 2Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+  </svg>
+);
+
+const ProjectIcon = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M22 19C22 19.5304 21.7893 20.0391 21.4142 20.4142C21.0391 20.7893 20.5304 21 20 21H4C3.46957 21 2.96086 20.7893 2.58579 20.4142C2.21071 20.0391 2 19.5304 2 19V5C2 4.46957 2.21071 3.96086 2.58579 3.58579C2.96086 3.21071 3.46957 3 4 3H9L11 6H20C20.5304 6 21.0391 6.21071 21.4142 6.58579C21.7893 6.96086 22 7.46957 22 8V19Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+  </svg>
+);
+
+const WhatsAppIcon = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M21 11.5C21.0034 12.8199 20.6951 14.1219 20.1 15.3C19.3944 16.7118 18.3098 17.8992 16.9674 18.7293C15.6251 19.5594 14.0782 19.9994 12.5 20C11.1801 20.0035 9.87812 19.6951 8.7 19.1L3 21L4.9 15.3C4.30493 14.1219 3.99656 12.8199 4 11.5C4.00061 9.92179 4.44061 8.37488 5.27072 7.03258C6.10083 5.69028 7.28825 4.6056 8.7 3.90003C9.87812 3.30496 11.1801 2.99659 12.5 3.00003H13C15.0843 3.11502 17.053 3.99479 18.5291 5.47089C20.0052 6.94699 20.885 8.91568 21 11V11.5Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+  </svg>
+);
+
+const AdminIcon = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d="M12 16V12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d="M12 8H12.01" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+  </svg>
+);
+
+const SecurityIcon = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M12 22C12 22 20 18 20 12V5L12 2L4 5V12C4 18 12 22 12 22Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+    <circle cx="12" cy="12" r="3" stroke="currentColor" strokeWidth="2"/>
+  </svg>
+);
+
+const AgentIcon = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="12" cy="12" r="3" stroke="currentColor" strokeWidth="2"/>
+    <path d="M12 1V3" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+    <path d="M12 21V23" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+    <path d="M4.22 4.22L5.64 5.64" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+    <path d="M18.36 18.36L19.78 19.78" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+    <path d="M1 12H3" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+    <path d="M21 12H23" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+    <path d="M4.22 19.78L5.64 18.36" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+    <path d="M18.36 5.64L19.78 4.22" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+  </svg>
+);
+
+const AutomationIcon = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d="M2 17L12 22L22 17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d="M2 12L12 17L22 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+  </svg>
+);
+
+const DesktopIcon = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect x="2" y="3" width="20" height="14" rx="2" stroke="currentColor" strokeWidth="2"/>
+    <path d="M8 21H16" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+    <path d="M12 17V21" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+    <circle cx="12" cy="10" r="3" stroke="currentColor" strokeWidth="2"/>
+  </svg>
+);
+
+const SidebarLink: React.FC<{ 
+  icon: string; 
+  text: string; 
+  onClick?: () => void; 
+  isActive?: boolean;
+  gradient?: string;
+  IconComponent?: React.FC;
+}> = ({ icon, text, onClick, isActive, gradient, IconComponent }) => (
+  <button 
+    onClick={onClick} 
+    className={`group flex items-center gap-3 p-3 rounded-xl hover:bg-[color:var(--bg-tertiary)] transition-all duration-200 w-full text-left ${isActive ? 'bg-[color:var(--bg-tertiary)]' : ''}`}
+  >
+    <div className={`w-9 h-9 rounded-lg ${gradient || 'bg-gradient-to-br from-gray-500 to-gray-600'} flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-200`}>
+      {IconComponent ? <IconComponent /> : <i className={`fa-solid ${icon} text-white text-sm`}></i>}
+    </div>
+    <span className="text-sm font-medium text-text-primary group-hover:text-white transition-colors">{text}</span>
   </button>
 );
 
@@ -110,28 +210,103 @@ const GlobalView: React.FC<Omit<SidebarProps, 'activeProjectId' | 'onExitProject
     );
 
     return <>
-        <div className="relative mb-2">
+        <div className="relative mb-4">
             <i className="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-text-tertiary pointer-events-none"></i>
             <input
                 type="text"
-                placeholder="Procurar chats..."
+                placeholder="Search chats..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full bg-[color:var(--bg-tertiary)] border border-transparent focus:border-[color:var(--border-color)] rounded-lg pl-9 pr-3 py-2 text-sm placeholder-text-tertiary focus:outline-none transition-colors"
+                className="w-full bg-[color:var(--bg-tertiary)] border border-transparent focus:border-indigo-500 rounded-xl pl-10 pr-3 py-2.5 text-sm placeholder-text-tertiary focus:outline-none transition-all duration-200 focus:shadow-lg focus:shadow-indigo-500/20"
             />
         </div>
 
         <div className="flex flex-col gap-2 mb-4">
-            <SidebarLink icon="fa-file-lines" text="📄 Documentos & Currículos" onClick={props.onSelectDocuments} />
-            <SidebarLink icon="fa-images" text="Galeria de Imagens" onClick={props.onSelectGallery} />
-            <SidebarLink icon="fa-book-bookmark" text="Biblioteca" onClick={props.onSelectLibrary} />
-            <SidebarLink icon="fa-folder" text="Projetos" onClick={props.onSelectProjects} />
-            <SidebarLink icon="fa-brands fa-whatsapp" text="💬 WhatsApp" onClick={props.onSelectWhatsApp} />
-            <SidebarLink icon="fa-user-shield" text="⚙️ Admin WhatsApp" onClick={props.onSelectAdmin} />
+            <SidebarLink 
+              icon="fa-file-lines" 
+              text="Documents" 
+              onClick={props.onSelectDocuments}
+              gradient="bg-gradient-to-br from-blue-500 to-blue-600"
+              IconComponent={DocumentIcon}
+            />
+            <SidebarLink 
+              icon="fa-images" 
+              text="Gallery" 
+              onClick={props.onSelectGallery}
+              gradient="bg-gradient-to-br from-purple-500 to-pink-500"
+              IconComponent={GalleryIcon}
+            />
+            <SidebarLink 
+              icon="fa-book-bookmark" 
+              text="Library" 
+              onClick={props.onSelectLibrary}
+              gradient="bg-gradient-to-br from-amber-500 to-orange-500"
+              IconComponent={LibraryIcon}
+            />
+            <SidebarLink 
+              icon="fa-folder" 
+              text="Projects" 
+              onClick={props.onSelectProjects}
+              gradient="bg-gradient-to-br from-cyan-500 to-teal-500"
+              IconComponent={ProjectIcon}
+            />
+            <SidebarLink 
+              icon="fa-brands fa-whatsapp" 
+              text="WhatsApp" 
+              onClick={props.onSelectWhatsApp}
+              gradient="bg-gradient-to-br from-green-500 to-emerald-600"
+              IconComponent={WhatsAppIcon}
+            />
+            <SidebarLink 
+              icon="fa-user-shield" 
+              text="Admin" 
+              onClick={props.onSelectAdmin}
+              gradient="bg-gradient-to-br from-indigo-500 to-purple-600"
+              IconComponent={AdminIcon}
+            />
+            {props.onSelectSecurity && (
+              <SidebarLink 
+                icon="fa-video" 
+                text="Security AI" 
+                onClick={props.onSelectSecurity}
+                gradient="bg-gradient-to-br from-red-500 to-rose-600"
+                IconComponent={SecurityIcon}
+              />
+            )}
+            {props.onSelectAgent && (
+              <SidebarLink 
+                icon="fa-robot" 
+                text="AI Agent" 
+                onClick={props.onSelectAgent}
+                gradient="bg-gradient-to-br from-violet-500 to-fuchsia-600"
+                IconComponent={AgentIcon}
+              />
+            )}
+            {props.onSelectAutomation && (
+              <SidebarLink 
+                icon="fa-wand-magic-sparkles" 
+                text="Automation" 
+                onClick={props.onSelectAutomation}
+                gradient="bg-gradient-to-br from-sky-500 to-blue-600"
+                IconComponent={AutomationIcon}
+              />
+            )}
+            {props.onSelectDesktop && (
+              <SidebarLink 
+                icon="fa-desktop" 
+                text="Desktop Control" 
+                onClick={props.onSelectDesktop}
+                gradient="bg-gradient-to-br from-cyan-500 to-blue-600"
+                IconComponent={DesktopIcon}
+              />
+            )}
         </div>
 
         <div className="flex-1 overflow-y-auto sidebar-scroll pr-1">
-            <p className="text-xs text-text-tertiary font-semibold px-3 py-2">Chats Recentes</p>
+            <div className="flex items-center gap-2 px-3 py-2 mb-2">
+              <div className="w-1 h-4 bg-gradient-to-b from-indigo-500 to-purple-500 rounded-full"></div>
+              <p className="text-xs text-text-tertiary font-bold uppercase tracking-wider">Recent Chats</p>
+            </div>
             <div className="flex flex-col gap-1">
             {filteredChatHistory.map((chat) => (
                 <ChatHistoryItem
@@ -185,24 +360,41 @@ export const Sidebar: React.FC<SidebarProps> = (props) => {
   return (
     <div className={`flex flex-col bg-[color:var(--bg-secondary)] text-text-primary transition-all duration-300 flex-shrink-0 ${props.isOpen ? 'w-64 p-3' : 'w-0'} h-full relative`}>
       <div className={`overflow-hidden transition-opacity duration-200 ${props.isOpen ? 'opacity-100' : 'opacity-0'} flex flex-col h-full`}>
-        <div className="flex justify-between items-center mb-4">
-          <div className="flex-grow">
-             <SidebarLink icon="fa-plus" text="Novo chat" onClick={props.onNewChat} />
-          </div>
-          <button onClick={props.onToggle} className="p-2 rounded-lg hover:bg-[color:var(--bg-tertiary)] flex-shrink-0">
-            <i className="fa-solid fa-bars-staggered"></i>
+        <div className="flex justify-between items-center mb-4 gap-2">
+          <button 
+            onClick={props.onNewChat}
+            className="flex-grow flex items-center justify-center gap-2 p-3 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white font-medium shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-200"
+          >
+            <i className="fa-solid fa-plus"></i>
+            <span>New Chat</span>
+          </button>
+          <button 
+            onClick={props.onToggle} 
+            className="p-3 rounded-xl hover:bg-[color:var(--bg-tertiary)] flex-shrink-0 transition-all duration-200 hover:scale-110"
+          >
+            <i className="fa-solid fa-bars-staggered text-text-secondary"></i>
           </button>
         </div>
 
         {props.activeProjectId ? <ProjectView {...props} /> : <GlobalView {...props} />}
         
         <div className="border-t border-[color:var(--border-color)] mt-auto pt-4">
-            <div className="flex items-center justify-between p-2 rounded-lg hover:bg-[color:var(--bg-tertiary)] cursor-pointer">
+            <div className="flex items-center justify-between p-3 rounded-xl hover:bg-[color:var(--bg-tertiary)] cursor-pointer transition-all duration-200 group">
                 <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center font-bold">A</div>
-                    <span className="text-sm">Almir junior</span>
+                    <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center font-bold text-white shadow-lg group-hover:scale-110 transition-transform duration-200">
+                      A
+                    </div>
+                    <div className="flex flex-col">
+                      <span className="text-sm font-semibold text-text-primary">Almir Junior</span>
+                      <span className="text-xs text-text-tertiary">Premium User</span>
+                    </div>
                 </div>
-                <button onClick={() => alert('Funcionalidade "Atualizar Perfil" a ser implementada.')} className="text-xs bg-blue-600 px-3 py-1 rounded-full hover:bg-blue-500">Atualizar</button>
+                <button 
+                  onClick={() => alert('Funcionalidade "Atualizar Perfil" a ser implementada.')} 
+                  className="text-xs bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-3 py-1.5 rounded-lg hover:from-indigo-500 hover:to-purple-500 font-medium shadow-md hover:shadow-lg transition-all duration-200"
+                >
+                  Update
+                </button>
             </div>
         </div>
       </div>

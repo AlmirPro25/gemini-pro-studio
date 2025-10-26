@@ -12,7 +12,7 @@ export const safeLocalStorage = {
         console.warn(`Storage limit exceeded for key "${key}". Size: ${size} bytes`);
         
         // Try to clean up old data
-        if (key === 'geminiChatHistory') {
+        if (key === 'proxChatHistory') {
           // Keep only last 20 chats
           const chats = Array.isArray(value) ? value.slice(0, 20) : value;
           localStorage.setItem(key, JSON.stringify(chats));
@@ -30,7 +30,7 @@ export const safeLocalStorage = {
         // Clear oldest chats
         try {
           const oldData = localStorage.getItem(key);
-          if (oldData && key === 'geminiChatHistory') {
+          if (oldData && key === 'proxChatHistory') {
             const chats = JSON.parse(oldData);
             if (Array.isArray(chats)) {
               const reducedChats = chats.slice(0, 10);

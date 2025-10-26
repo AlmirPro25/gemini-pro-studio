@@ -534,4 +534,15 @@ export class LiveSessionManager {
     this.sources.forEach(source => source.stop());
     this.sources.clear();
   }
+  
+  async sendMessage(message: { text?: string; media?: any }) {
+    if (!this.session) {
+      throw new Error('Session not active');
+    }
+    return this.session.send(message);
+  }
+  
+  isActive(): boolean {
+    return this.session !== null;
+  }
 }

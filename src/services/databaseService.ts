@@ -99,7 +99,7 @@ interface DBSchema {
 }
 
 class DatabaseService {
-  private dbName = 'GeminiProStudio';
+  private dbName = 'proxaistudio';
   private version = 2;
   private db: IDBDatabase | null = null;
 
